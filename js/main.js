@@ -1,7 +1,10 @@
-const modalProduct = document.querySelector(".modal_product");
-const catalogList = document.querySelector(".catalog__list");
+import { catalogList, modalProduct } from "./elements.js";
+import { createCardProduct } from "./createCardProduct.js";
+import { openModal } from "./openModal.js";
+import { renderListProduct } from "./renderListProduct.js";
+import { navigationListController } from "./navigationListController.js";
 
-const product = {
+const maxBurger = {
   title: "Super Burger",
   price: "999",
   weight: "722",
@@ -11,34 +14,11 @@ const product = {
   ingredients: ["bread", "meat", "onion", "cheese", "ketchup", "tomato"],
 };
 
-const ingredientsList = document.querySelector(".ingredients__list");
-const ingredientsCalories = document.querySelector(".ingredients__calories");
-const moduleProductTitle = document.querySelector(".modal-product__title");
-const moduleProductImage = document.querySelector(".modal-product__image");
-const moduleProductDesc = document.querySelector(".modal-product__description");
-const moduleProductPrice = document.querySelector(
-  ".modal-product__price-count"
-);
-
-moduleProductTitle.textContent = product.title;
-moduleProductImage.src = product.image;
-
-const ingredientsListItems = product.ingredients.map((item) => {
-  const li = document.createElement("li");
-  li.classList.add("ingredient__item");
-  li.textContent = item;
-
-  return li;
-});
-
-ingredientsList.textContent = "";
-ingredientsList.append(...ingredientsListItems);
-
 catalogList.addEventListener("click", (e) => {
   const target = e.target;
 
   if (target.closest(".product__detail") || target.closest(".product__image")) {
-    modalProduct.classList.add("modal_open");
+    openModal(maxBurger);
   }
 });
 
@@ -49,3 +29,10 @@ modalProduct.addEventListener("click", (e) => {
     modalProduct.classList.remove("modal_open");
   }
 });
+
+const init = () => {
+  renderListProduct();
+  navigationListController();
+};
+
+init();
