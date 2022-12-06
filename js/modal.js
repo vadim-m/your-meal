@@ -1,3 +1,4 @@
+import { API_URL, PREFIX_PRODUCT } from "./const.js";
 import {
   modalProduct,
   modalProductTitle,
@@ -6,13 +7,17 @@ import {
   modalProductPrice,
   ingredientsList,
   ingredientsCalories,
+  modalProductBtn,
 } from "./elements.js";
+import { getData } from "./getData.js";
 
-export const openModal = (product) => {
+export const openModal = async (id) => {
+  const product = await getData(`${API_URL}${PREFIX_PRODUCT}/${id}`);
   modalProductTitle.textContent = product.title;
   modalProductDesc.textContent = product.description;
   modalProductPrice.textContent = product.price;
-  modalProductImage.src = product.image;
+  modalProductImage.src = `${API_URL}/${product.image}`;
+  modalProductBtn.dataset.idProduct = product.id;
 
   const ingredientsListItems = product.ingredients.map((item) => {
     const li = document.createElement("li");
@@ -27,4 +32,12 @@ export const openModal = (product) => {
   ingredientsList.append(...ingredientsListItems);
 
   modalProduct.classList.add("modal_open");
+  document.addEventListener("keydown", closeModal);
+};
+
+export const closeModal = (e) => {
+  if (e.key === "Escape") {
+    modalProduct.classList.remove("modal_open");
+    document.removeEventListener("keydown", closeModal);
+  }
 };
