@@ -10,7 +10,7 @@ export const createCardProduct = (product) => {
       <h3 class="product__title">
         <button class="product__detail">${product.title}</button>
       </h3>
-      <p class="product__weight">${product.weight}</p>
+      <p class="product__weight">${product.weight} г.</p>
       <button class="product__add">Добавить</button>
     </article>
   `;
